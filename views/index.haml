@@ -1,0 +1,65 @@
+!!!
+%html
+  %head
+    %title meta :: roll
+    %link{ :rel => 'stylesheet', :href => '/styles/style.css', :type => 'text/css' } 
+    %script{:src => 'http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js', :type => 'text/javascript'}
+    %script{:src => 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js', :type => 'text/javascript'}
+    %script{:src => '/jscript/roll-ui.js', :type => 'text/javascript'}
+    %script{:src => '/jscript/textSaver-0.1.1.min.js', :type => 'text/javascript'}
+    
+  #container
+    #header
+      %a{:href => '/'}
+        %img{:src => '/img/logo.png', :alt => 'meta :: roll'}/
+      
+    #content
+      %p This is a Dungeons & Dragons game!  Please play it in Google Chrome because it looks prettier (for now).
+      %p The newest stories are posted at the top, so read it backwards like a blog.
+      %p
+        == You are participating in #{@adventure.user.name}'s
+        %strong== #{@adventure.name} : #{@adventure.description}
+      
+      .hud-write.post
+        .body
+          %h1 Contribute to your adventure.
+          #hud-body
+            %form{:method => "post"}
+              %label{:for => 'author'} From:
+              %select{:name => 'author', :style => "opacity:.75; padding-left:.5em; margin-left:.5em; font: 12pt 'Times';"}
+                - @characters.each do |char|
+                  %option{:value => char.id}= char.name
+              #write-to
+                %label{:for => 'write-to'} To:
+                #writeto-all
+                  %input#check-all{:type => 'checkbox', :checked => true}<
+                    %label{:for => 'check-all'} Everyone
+                #writeto-list
+                  %input#check-gm{:type => 'checkbox', :checked => true, :disabled => true}<
+                    %label{:for => 'check-gm'} GM
+                  %input#check-shadow{:type => 'checkbox', :checked => true}<
+                    %label{:for => 'check-shadow'} Shadow
+              %textarea#ic{:name => 'text', :placeholder => 'Speak in character.'}
+              #ooc<
+                + Add out-of-character note
+              %textarea#ooc{:name => 'ooc', :placeholder => 'Speak out of character.'}
+              %br/
+              %input{:type => 'submit', :value => 'Publish'}
+          %span.ui-shadow-l
+          %span.ui-shadow-r
+      
+      - @posts.each do |post|
+        %div.post{:class => post.character.type }
+          .body
+            %img{:src => "/img/#{( gm? post.character ) ? @posticon['GM'] : @posticon['Adventurer'] }" }
+            %h1<
+              = post.character.name
+              - if post.character.race or post.character.class
+                %span.player-info== #{showifexists post.character.race} #{showifexists post.character.class}
+            %p= post.text
+            %span.ui-shadow-l
+            %span.ui-shadow-r
+          - if post.ooc
+            .ps
+              %strong== #{post.character.user.name}:
+              #{post.ooc}
