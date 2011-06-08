@@ -8,6 +8,11 @@ require './rollmodels.rb'
 require './mysql-setup.rb'
 
 
+get '/style.css' do
+  headers 'Content-Type' => 'text/css; charset=utf-8'
+  sass :style
+end
+
 # index
 get '/' do
   @posticon = { "GM" => "badge-star.png",
@@ -19,9 +24,7 @@ get '/' do
   end
   
   def gm? char
-    if char.user.id == char.adventure.user.id then true
-    else false
-    end
+    char.user.id == char.adventure.user.id
   end
   
   @adventure = Adventure.first
@@ -48,17 +51,22 @@ post '/' do
   redirect '/'
 end
 
-get '/reset' do
+# register
+get '/register/' do
+  haml :register
+end
+
+# reset the database
+get '/reset/' do
   DataMapper.auto_migrate!
 
   # fill up the database with some junk
   
   # users
   lurker = User.create(:name => "Lurker", :pass => "nil", :email => "nil", :verified => false)
-  ethan = User.new(:name => "Ethan", :pass => "test", :email => "epemble@gmail.com", :verified => true)
-  ethan.save
-  alex = User.new(:name => "Alex", :pass => "test", :email => "dickpemble@gmail.com", :verified => true)
-  alex.save
+  ethan = User.create(:name => "Ethan", :pass => "test", :email => "epemble@gmail.com", :verified => true)
+  alex = User.create(:name => "Alex", :pass => "test", :email => "dickpemble@gmail.com", :verified => true)
+  neil = User.create(:name => "Neil", :pass => "test", :email => "neil@neil.neil", :verified => true)
 
   # adventure
   adventure = Adventure.new(
@@ -70,7 +78,7 @@ get '/reset' do
   adventure.save
   
   # characters
-  character = Adventurer.new(
+  firebeard = Adventurer.create(
     :name => "Firebeard",
     :race => "Dwarf",
     :class => "Fighter",
@@ -78,16 +86,23 @@ get '/reset' do
     :user => ethan,
     :adventure => adventure
   )
-  character.save
-  sheet = Sheet.create(:character => character)
+  sheet = Sheet.create(:character => firebeard)
 
-  npc = NPC.new(
+  shadow = Adventurer.create(
     :name => "Shadow",
+    :race => "Halfling",
+    :class => "Rogue",
+    :visible => true,
+    :user => neil,
+    :adventure => adventure
+  )
+  
+  npc = NPC.create(
+    :name => "Druid Elder",
     :visible => true,
     :user => alex,
     :adventure => adventure
   )
-  npc.save
   
   gm = GM.create(
     :name => "Game Master",
@@ -100,10 +115,10 @@ get '/reset' do
   # posts
   post3 = Post.create(
     :text => "Shadow walks into the shadows.",
-    :character => npc, :adventure => adventure, :created_at => Time.now+2 )
+    :character => shadow, :adventure => adventure, :created_at => Time.now+2 )
   post2 = Post.create(
     :text => "Firebeard hates his stupid axe.  He roars a bunch.",
-    :character => character, :adventure => adventure, :created_at => Time.now+1 )
+    :character => firebeard, :adventure => adventure, :created_at => Time.now+1 )
   post1 = Post.create(
     :text => "Welcome to the game.",
     :character => gm, :adventure => adventure, :created_at => Time.now )
@@ -111,19 +126,6 @@ get '/reset' do
   #
   redirect '/'
 end
-
-# create
-#post '/' do
-#  post = Post.create( :title => params[:title], :created_at => Time.now )
-#  redirect '/'
-#end
-
-# mark complete / incomplete
-#get '/:id/mark/:is_complete' do
-#  post=Post.get( params[:id] )
-#  post.update( :complete => ( params[:is_complete] == 'complete' ) )
-#  redirect '/'
-#end
 
 # delete
 #get '/:id/delete' do

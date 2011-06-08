@@ -1,0 +1,178 @@
+// Style.sass!
+$overlap: 7px
+
+@mixin collapse
+  margin: 0
+  padding: 0
+
+@mixin innerglow( $size, $color )
+  -webkit-box-shadow: inset 0 0 $size $color
+  -moz-box-shadow: inset 0 0 $size $color
+  
+@mixin paint-post( $color )
+  $font: desaturate( darken( $color, 47% ), 15% )
+  $background: $color
+  $border: darken( $color, 16% )
+  $bottom-border: desaturate( darken( $color, 27% ), 10% )
+  $ps-background: desaturate( lighten( $color, 8% ), 5% )
+  
+  color: $font
+  .bar
+    background-color: $background
+    border-color: $border
+  .body
+    background-color: $background
+    border-color: $border
+    border-bottom-color: $bottom-border
+  .ps
+    color: lighten( $font, 12% )
+    background: -webkit-linear-gradient( top, desaturate( $color, 15% ), $ps-background $overlap )
+    background-color: $ps-background
+    border-bottom-color: darken( $color, 5% )
+  span[class|="ui-shadow"]
+    border-top-color: $bottom-border
+    
+body
+  font:
+    family: "Times New Roman"
+    size: 100%
+    style: normal
+    weight: normal
+  background:
+    color: #cbcfd4
+    image: url(/img/bg-stripe-vert.png)
+    repeat: repeat-y
+    position: center
+  color: black
+  @include collapse
+
+ul, ol, dl
+  @include collapse
+h1, h2, h3, h4, h5, h6, p
+  @include collapse
+a img
+  border: none
+
+em
+  color: #be6d26
+
+#container
+  margin: 1.5em auto
+  position: relative
+  width: 800px
+  background-color: #f7f7f0
+  border:
+    width: 1px
+    style: solid
+    color: #9e9891
+    bottom:
+      width: 2px
+      color: #6b655e
+
+#header img
+  padding: 1em
+    bottom: .5em
+
+.post
+  margin:
+    left: -$overlap
+    right: -$overlap
+    bottom: round(1.25*$overlap)
+  position: relative
+  p
+    line-height: 1.5em
+  h1
+    display: inline-block
+    cursor: default
+    font:
+      size: 1.2em
+      weight: normal
+    color: black
+
+  .bar
+    position: absolute
+    bottom: 100%
+    right: 0
+    padding: .5em 1em
+    border: 1px solid
+      bottom: 0
+    @include innerglow( 2px, #f7f7f0 )
+    
+  .info
+    display: inline-block
+    cursor: default
+    padding-left: 1em
+    font-size: .8em
+    word-spacing: .5em
+    
+  .body
+    padding: 1em 1.3em
+    position: relative
+    border: 1px solid
+    @include innerglow( 2px, #f7f7f0 )
+    &:hover
+      img
+        opacity: 1.0
+    p
+      padding-top: .25em
+    h1
+      cursor: pointer
+    img
+      opacity: .75
+      padding-right: .25em
+
+  .ps
+    margin: 0 $overlap
+    padding: .4em 1em .3em
+    font-style: italic
+    border-bottom: 1px solid
+    @include innerglow( 1px, #f7f7f0 )
+    strong
+      padding-right: .25em
+      font-style: italic
+  
+  span[class|="ui-shadow"]
+    position: absolute
+    top: 100%
+    border-top: $overlap solid
+  .ui-shadow-l
+    left: -1px
+    border-left: $overlap solid transparent
+  .ui-shadow-r
+    right: -1px
+    border-right: $overlap solid transparent
+    
+.post.GM
+  @include paint-post( #d9cea5 ) // d4c5b5 dcd1a8
+
+.post.NPC
+  @include paint-post( #bec7d1 ) // b3c4d6 bec7d1
+  
+.post.Adventurer
+  @include paint-post( #ccd3b6 ) // ccd3b6 bcc8d8
+
+.post.GUI
+  margin:
+    top: .5em
+    left: -2*$overlap
+    right: -2*$overlap
+    bottom: 0
+  h1
+    display: block
+    cursor: pointer
+    padding-left: .4em
+  .body
+    @include innerglow( 3px, white )
+    padding-bottom: .95em
+  .body.collapsable, .body.expandable:hover
+    background-color: lighten( #d8e0bd, 5% )
+  span[class|="ui-shadow"]
+    border-top: floor(1.5*$overlap) solid
+  .ui-shadow-l
+    border-left-width: 2*$overlap
+  .ui-shadow-r
+    border-right-width: 2*$overlap
+  @include paint-post( #d8e0bd )
+  
+.shadow
+  background: -webkit-linear-gradient(top, #c7c9cb, #f7f7f0 10px)

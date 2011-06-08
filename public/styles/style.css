@@ -181,12 +181,10 @@ div.post h1 {
 	display: inline-block;
 	font-size: 1.2em;
 	font-weight: normal;
-	padding: .75em .4em .6em;
+	padding: .75em .25em;
 	color: black;
 }
-div.post div.body img {
-	padding: 0 0 0 .9em;
-}
+
 div.post.gm			h1::before,
 div.post.npc		h1::before { opacity: 0.75; padding-right: 0.5em; content: url(/img/badge-star.png); }
 div.post.player		h1::before { opacity: 0.75; padding-right: 0.5em; content: url(/img/badge-solid.png); }
@@ -214,7 +212,7 @@ div.post div.body > * { margin: 0; }
 div.post div.body {
 	margin: 0.5em -7px 0;
 	position: relative;
-	padding: 0 7px 0.5em;
+	padding: 0 7px 0.25em;
 	border: 1px solid;
 	border-bottom: 1px solid;
 	-webkit-box-shadow: inset 0 0 2px #f7f7f0;
@@ -270,10 +268,6 @@ div.ps strong {
 	padding-right: 0.5em;
 	font-style: italic;
 }
-p.ui-ps::before {
-	content: url(/roll/img/icon_arrow-down.png);
-	padding-right: 0.5em;
-}
 p.ui-ps {
 	position:absolute;
 	right:0; bottom:-12px;
@@ -281,12 +275,12 @@ p.ui-ps {
 	display: inline-block;
 }
 span.return {
-	content: url(/roll/img/icon_arrow-up.png);
+	content: url(/img/icon_arrow-up.png);
 	cursor: pointer;
 	position: absolute;
-	right: 6px;
-	bottom: -3px;
-	padding: 10px;
+	right: 2px;
+	bottom: -6px;
+	padding: 12px;
 	display: inline-block;
 }
 
@@ -440,3 +434,18 @@ div#ooc {
 	margin: 1em 0 0;
 	padding: 0 1em;
 }
+
+
+.info {
+  display:inline-block;
+  padding-left:.25em;
+  margin:0;
+  font-size: 10pt;
+  color: black;
+  opacity: .5;
+  word-spacing: .5em;
+}
+
+.post .body img { opacity: .75; padding: 0 0 0 .85em; }
+.post .body h1 { font-size: 12pt; }
+.hud-write.post .body h1 { font-size: 14pt; }
