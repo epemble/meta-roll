@@ -142,37 +142,34 @@ em
     right: -1px
     border-right: $overlap solid transparent
     
-.post.GM
-  @include paint-post( #d9cea5 ) // d4c5b5 dcd1a8
-
-.post.NPC
-  @include paint-post( #bec7d1 ) // b3c4d6 bec7d1
-  
-.post.Adventurer
-  @include paint-post( #ccd3b6 ) // ccd3b6 bcc8d8
-
-.post.GUI
-  margin:
-    top: .5em
-    left: -2*$overlap
-    right: -2*$overlap
-    bottom: 0
-  h1
-    display: block
-    cursor: pointer
-    padding-left: .4em
-  .body
-    @include innerglow( 3px, white )
-    padding-bottom: .95em
-  .body.collapsable, .body.expandable:hover
-    background-color: lighten( #d8e0bd, 5% )
-  span[class|="ui-shadow"]
-    border-top: floor(1.5*$overlap) solid
-  .ui-shadow-l
-    border-left-width: 2*$overlap
-  .ui-shadow-r
-    border-right-width: 2*$overlap
-  @include paint-post( #d8e0bd )
+  &.GM
+    @include paint-post( #d9cea5 ) // d4c5b5 dcd1a8
+  &.NPC
+    @include paint-post( #bec7d1 ) // b3c4d6 bec7d1
+  &.Adventurer
+    @include paint-post( #ccd3b6 ) // ccd3b6 bcc8d8
+  &.GUI
+    margin:
+      top: .5em
+      left: -2*$overlap
+      right: -2*$overlap
+      bottom: 0
+    h1
+      display: block
+      cursor: pointer
+      padding-left: .4em
+    .body
+      @include innerglow( 3px, white )
+      padding-bottom: .95em
+    .body.collapsable, .body.expandable:hover
+      background-color: lighten( #d8e0bd, 5% )
+    span[class|="ui-shadow"]
+      border-top: floor(1.5*$overlap) solid
+    .ui-shadow-l
+      border-left-width: 2*$overlap
+    .ui-shadow-r
+      border-right-width: 2*$overlap
+    @include paint-post( #d8e0bd )
   
 .shadow
   background: -webkit-linear-gradient(top, #c7c9cb, #f7f7f0 10px)
